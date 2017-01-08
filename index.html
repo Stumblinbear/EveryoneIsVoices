@@ -17,9 +17,6 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="assets/js/modal/modal.css" />
-    <script type="text/javascript" src="assets/js/modal/modal.js"></script>
-
     <style>
       i {
          color: #888;
@@ -33,7 +30,7 @@
       <div class="row" style="margin-top: 25%">
         <div class="one-half column">
           <h4>Everyone is John</h4>
-          <p>Need a persona for <i id="everyoneisjohn">Everyone is John</i>? This tool will generate a voice for you to use in your next session! Click the button below to become someone new.</p>
+          <p>Need a persona for <a href="https://1d4chan.org/wiki/Everyone_Is_John">Everyone is John</a>? This tool will generate a voice for you to use in your next session! Click the button below to become someone new.</p>
           <button id="generate">I am a strong, independent voice.</button>
         </div>
         <div class="one-half column" id="generated" style="display:none">
@@ -108,15 +105,6 @@
       function rand(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
       }
-
-      $('#everyoneisjohn').click(function() {
-        JohnCena.new({
-          title: 'Everyone is John',
-          lead: 'Rules for the game.',
-
-          text: 'Stuff'
-        }).open();
-      });
 
       $('#generate').click(function() {
         $('#generated').fadeOut(function() {
