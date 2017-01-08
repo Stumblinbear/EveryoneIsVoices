@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Everyone is John</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Trevin  Miller" />
+    <meta name="description" content="Generate voices for the game Everyone is John." />
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <style>
+      i {
+         color: #888;
+         border-bottom: 1px solid #AAA;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" style="margin-top: 25%">
+        <div class="one-half column">
+          <h4>Everyone is John</h4>
+          <p>Need a persona for <i>Everyone is John</i>? This tool will generate a voice for you to use in your next session! Click the button below to become someone new.</p>
+          <button id="generate">I am a strong, independent voice.</button>
+        </div>
+        <div class="one-half column" id="generated" style="display:none">
+          <h4>You are <span id="name"></span>.</h4>
+          <p>You are skilled in <span id="skills"></span>.<span id="skills-handicap" style="color:red"> But, you only start with 7 willpower.</span></p>
+          <p>You are obsessed with <span id="obsession"></span>.</p>
+          <p><b>You gain <span id="obsession-level"></span> points for completing your obsession.</b></p>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var names = [
+          'John', 'Jon', 'Jonathon', 'Johnny', 'Johnson', 'Janeane',
+          'Jean', 'Jaden', 'Jimmy', 'Joe', 'Jacob'
+      ];
+
+      var skills = [
+          'Lying',
+          'Climbing',
+          'Kick-boxing',
+          'Speed eating',
+          'Lock-picking',
+          'Pick-pocketing',
+          'Throwing boxes',
+          'Starting fires',
+          'Eating way too much',
+          'Giving motivational speeches',
+          'Surviving falls from great heights',
+          'Assembling and detonating explosives',
+          'Creating and using improvisational weapons',
+          'Performing magic tricks with a deck of cards',
+          'Dropping an assortment of expletives',
+          'Running for long distances',
+          'Hiding anywhere',
+          'Parallel parking',
+          'Break dancing',
+          'Parkour',
+      ];
+
+      var obsessions = [
+          [
+              'Eating candy',
+              'Yelling at children',
+              'Taking a nap in public',
+              'Doing barrel rolls',
+              'Playing a game of golf',
+              'Interrupting lectures',
+          ],
+          [
+              'Participating in a flash mob',
+              'Preparing for the oncoming apocalypse',
+              'Reenacting a scene from Les Misérables',
+              'Pretending to be a bird',
+              'Selling your organs on the black market',
+              'Punching somebody in a uniform',
+              'Punching the elderly',
+              'Killing animals'
+          ],
+          [
+              'Convincing someone that this is a game of "Everone is John"',
+              'Having burgers with the president of the United States of America',
+              'Getting away with murder',
+              'Going to the moon',
+              'Riding dinosaurs',
+              'Getting a doctorate',
+              'Walking away from an explosion like an action hero',
+              'Kidnapping children',
+              'Terrorist bombing populated areas'
+          ]
+      ];
+
+      function rand(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      $('#generate').click(function() {
+        $('#generated').fadeOut(function() {
+          $('#skills-handicap').hide();
+
+          $('#name').html('<i>' + rand(names) + '</i>');
+
+          var level = {
+            skills: (Math.random() < .25 ? 3 : 2),
+            obsession: Math.floor(Math.random() * 3),
+          };
+
+          {
+            var list = [];
+            for(var i = level.skills; i > 0; i--) {
+              var skill = rand(skills);
+              while($.inArray(skill, list) > -1) skill = rand(skills);
+              list.push(skill);
+            }
+            $('#skills').html('<i>' + (list.length == 1 ? list[0] : [ list.slice(0, -1).join("</i>, <i>"), list[list.length - 1] ].join("</i>, and <i>")));
+            if(level.skills > 2)
+              $('#skills-handicap').show();
+          }
+
+          {
+            $('#obsession').html('<i>' + rand(obsessions[level.obsession]) + '</i>');
+            $('#obsession-level').html(level.obsession + 1);
+          }
+
+          $('#generated').fadeIn();
+        });
+      });
+    </script>
+  </body>
+</html>
